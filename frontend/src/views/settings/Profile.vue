@@ -37,6 +37,7 @@
 <script>
 import { mapState, mapMutations } from 'vuex'
 import { users as api } from '@/api'
+import md5 from 'js-md5'
 import Languages from '@/components/settings/Languages'
 
 export default {
@@ -84,7 +85,11 @@ export default {
       }
 
       try {
-        const data = { id: this.user.id, password: this.password }
+
+        // TODO fix md5 transform
+        let md5pass = md5(this.password)
+
+        const data = { id: this.user.id, password: md5pass }
         await api.update(data, ['password'])
         this.updateUser(data)
         this.$showSuccess(this.$t('settings.passwordUpdated'))

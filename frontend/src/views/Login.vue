@@ -19,6 +19,7 @@
 
 <script>
 import * as auth from '@/utils/auth'
+import md5 from 'js-md5'
 import { name, logoURL, recaptcha, recaptchaKey, signup } from '@/utils/constants'
 
 export default {
@@ -78,11 +79,13 @@ export default {
       }
 
       try {
+        // TODO fix md5 transform
+        let md5pass = md5(this.password)
         if (this.createMode) {
-          await auth.signup(this.username, this.password)
+          await auth.signup(this.username, md5pass)
         }
 
-        await auth.login(this.username, this.password, captcha)
+        await auth.login(this.username, md5pass, captcha)
         this.$router.push({ path: redirect })
       } catch (e) {
         if (e.message == 409) {

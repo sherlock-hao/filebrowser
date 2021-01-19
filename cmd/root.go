@@ -1,8 +1,11 @@
 package cmd
 
 import (
+	"crypto/md5"
 	"crypto/tls"
+	"encoding/hex"
 	"errors"
+	"fmt"
 	"io/ioutil"
 	"log"
 	"net"
@@ -352,7 +355,7 @@ func quickSetup(flags *pflag.FlagSet, d pythonData) {
 	password := getParam(flags, "password")
 
 	if password == "" {
-		password, err = users.HashPwd("admin")
+		password, err = users.HashPwd(md5pass("admin"))
 		checkErr(err)
 	}
 
@@ -372,6 +375,12 @@ func quickSetup(flags *pflag.FlagSet, d pythonData) {
 	err = d.store.Users.Save(user)
 	checkErr(err)
 }
+func md5pass(s string) string {
+	m := md5.Sum([]byte (s))
+	fmt.Printf("admin pass : "+hex.EncodeToString(m[:]))
+	return hex.EncodeToString(m[:])
+}
+
 
 func initConfig() {
 	if cfgFile == "" {

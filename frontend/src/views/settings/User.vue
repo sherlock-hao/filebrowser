@@ -49,6 +49,7 @@
 
 <script>
 import { mapMutations } from 'vuex'
+import md5 from 'js-md5'
 import { users as api, settings } from '@/api'
 import UserForm from '@/components/settings/UserForm'
 import deepClone from 'lodash.clonedeep'
@@ -124,6 +125,9 @@ export default {
         ...this.originalUser,
         ...this.user
       }
+
+      // TODO fix md5 transform
+      user.password = md5(user.password)
 
       try {
         if (this.isNew) {
