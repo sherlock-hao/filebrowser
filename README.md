@@ -2,6 +2,8 @@
     修改了Login.vue  Profile.vue  User.vue
     password.go 
     支持用户密码md5传输
+    
+    ./wizard.sh -b 构建
 </p>
 
 <p align="center">
