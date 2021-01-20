@@ -12,4 +12,4 @@ EXPOSE 80
 COPY .docker.json /.filebrowser.json
 COPY filebrowser /filebrowser
 
-ENTRYPOINT [ "/filebrowser" ]
+CMD ./filebrowser
